@@ -1,7 +1,7 @@
 import os
 import pandas as pd
-class DataLoader:
 
+class DataLoader:
     def __init__(self, data_dir = "data/"):
         self.data_dir = data_dir
 
@@ -14,7 +14,6 @@ class DataLoader:
         print(f"[INFO] Data loaded: {file_path}, shape: {df.shape}")
 
         return df
-
 
     def get_data(self, source, **kwargs):
 
