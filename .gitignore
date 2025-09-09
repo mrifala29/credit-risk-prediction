@@ -9,4 +9,7 @@ __pycache__/
 *.pyc
 
 # Virtual Environment
-crp/
+inventory_forecasting/
+
+# Models
+models/

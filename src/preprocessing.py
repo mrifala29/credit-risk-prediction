@@ -1,4 +1,7 @@
 import pandas as pd
+import joblib
+import logging
+
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
@@ -71,6 +74,10 @@ class Preprocessor:
         # transform data
         X_train_processed = self.preprocessor.fit_transform(X_train)
         X_test_processed = self.preprocessor.transform(X_test)
+        
+        # Simpan preprocessor agar bisa digunakan saat prediksi
+        joblib.dump(self.preprocessor, "models/preprocessor.pkl")
+        logging.info("Hasil preprocessing tersimpan sebagai preprocessor.pkl")
 
         return X_train_processed, X_test_processed, y_train, y_test
 
