@@ -50,9 +50,7 @@ if __name__ == "__main__":
 
     # Contoh 1: tanpa filter region
     df_all = loader.get_data(source="local", filename="retail_store_inventory.csv")
-    print(df_all.shape)
-    
-    print(df_all.info())
+    print(df_all)
 
     # Contoh 2: filter hanya East
     df_east = loader.get_data(source="local", filename="retail_store_inventory.csv", region="East")
