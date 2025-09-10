@@ -1,6 +1,5 @@
 # evaluator.py
 import joblib
-import config
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from data_loader import DataLoader
 from preprocessing import Preprocessor
@@ -11,6 +10,7 @@ class Evaluator:
         self.preprocessor = joblib.load(preprocessor_path)
 
     def evaluate(self, X_test, y_test):
+        # transform pakai preprocessor yang sudah di-fit di training
         X_test_processed = self.preprocessor.transform(X_test)
         preds = self.model.predict(X_test_processed)
 
@@ -30,19 +30,22 @@ if __name__ == "__main__":
     loader = DataLoader()
     df = loader.get_data(source="local", filename="retail_store_inventory.csv", region="East")
 
-    # Preprocessing
+    # Gunakan Preprocessor hanya untuk split, jangan fit lagi
     pre = Preprocessor(
         target_col="Units Sold",
         drop_cols=["Region", "Demand Forecast"],
         date_cols=["Date"],
         test_size=0.2
     )
-    _, X_test, _, y_test = pre.get_processed_data(df)
+    X, y = pre.split_features_target(df)
+
+    # manual split (supaya tidak fit ulang)
+    split_index = int(len(X) * (1 - pre.test_size))
+    X_test, y_test = X.iloc[split_index:], y.iloc[split_index:]
 
     # Evaluasi
     evaluator = Evaluator(
         model_path="models/model.pkl",
         preprocessor_path="models/preprocessor.pkl"
     )
-    
     evaluator.evaluate(X_test, y_test)
