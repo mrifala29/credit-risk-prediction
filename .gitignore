@@ -12,4 +12,5 @@ __pycache__/
 inventory_forecasting/
 
 # Models
-models/*.pkl
+models/
+*.pkl
