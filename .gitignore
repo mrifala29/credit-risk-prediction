@@ -13,4 +13,3 @@ inventory_forecasting/
 
 # Models
 models/
-*.pkl
